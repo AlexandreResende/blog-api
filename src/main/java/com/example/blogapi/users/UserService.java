@@ -1,5 +1,6 @@
 package com.example.blogapi.users;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,6 +12,13 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User getUserById(Long userId) {
         User user = new User(
@@ -46,13 +54,13 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        User createdUser = new User(
-            user.getName(),
-            user.getEmail(),
-            user.getDateOfBirth()
-        );
+        Optional<User> optionalUser = userRepository.findUserByEmail(user.getEmail());
 
-        return createdUser;
+        if (optionalUser.isPresent()) {
+            throw new IllegalStateException("Email already being used");
+        }
+
+        return userRepository.save(user);
     }
 
     @Transactional

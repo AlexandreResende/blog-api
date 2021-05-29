@@ -8,8 +8,8 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Period;
 
-@Table
 @Entity
+@Table(name = "\"user\"")
 public class User {
     @Id
     @SequenceGenerator(
@@ -22,21 +22,17 @@ public class User {
         generator = "user_sequence"
     )
     private Long id;
-
+    @NotNull
     private String name;
-
+    @NotNull
     @Email
     private String email;
-
     private boolean isDeleted = false;
-
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dateOfBirth;
-
     private LocalDate lastLogin;
-
     private LocalDate createdAt = LocalDate.now();
-
     @Transient
     private Integer age;
 
@@ -128,5 +124,19 @@ public class User {
 
     public void setLastLogin(LocalDate lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", email='" + email + '\'' +
+        ", isDeleted=" + isDeleted +
+        ", dateOfBirth=" + dateOfBirth +
+        ", lastLogin=" + lastLogin +
+        ", createdAt=" + createdAt +
+        ", age=" + age +
+        '}';
     }
 }
