@@ -1,5 +1,6 @@
 package com.example.blogapi.users;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,18 +21,18 @@ public class UserController {
     }
 
     @GetMapping(path = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserEntity> getUser(
+    public ResponseEntity<User> getUser(
         @PathVariable("userId") Long userId
     ) {
-        UserEntity user = userService.getUserById(userId);
+        User user = userService.getUserById(userId);
 
         return ResponseEntity.ok(user);
     }
 
     @GetMapping
-    public ResponseEntity<HashMap<String, List<UserEntity>>> getUsers() {
-       List<UserEntity> users = userService.getUsers();
-       HashMap<String, List<UserEntity>> response = new HashMap<>();
+    public ResponseEntity<HashMap<String, List<User>>> getUsers() {
+       List<User> users = userService.getUsers();
+       HashMap<String, List<User>> response = new HashMap<>();
 
        response.put("users", users);
 
@@ -39,11 +40,23 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserEntity> createUser(
-        @RequestBody UserEntity user
-    ) {
-        UserEntity createdUser = userService.createUser(user);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User createdUser = userService.createUser(user);
 
         return ResponseEntity.ok(createdUser);
+    }
+
+    @PutMapping(
+        value = "/{userId}",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<User> updateUser(
+        @PathVariable("userId") Long userId,
+        @RequestBody User user
+    ) {
+        User updatedUser = userService.updateUser(userId, user);
+
+        return ResponseEntity.ok(updatedUser);
     }
 }

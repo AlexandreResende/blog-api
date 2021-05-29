@@ -2,6 +2,7 @@ package com.example.blogapi.users;
 
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +10,8 @@ import java.util.List;
 @Service
 public class UserService {
 
-    public UserEntity getUserById(Long userId) {
-        UserEntity user = new UserEntity(
+    public User getUserById(Long userId) {
+        User user = new User(
             1L,
             "Alexandre",
             "aasdas@gmail.com",
@@ -20,16 +21,16 @@ public class UserService {
         return user;
     }
 
-    public List<UserEntity> getUsers() {
-        List<UserEntity> users = new ArrayList<UserEntity>();
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<User>();
 
-        UserEntity user1 = new UserEntity(
+        User user1 = new User(
             1L,
             "Alex",
             "a1234s@gmail.com",
             LocalDate.parse("1988-12-10")
         );
-        UserEntity user2 = new UserEntity(
+        User user2 = new User(
             1L,
             "Alexandre",
             "e12345r@gmail.com",
@@ -42,13 +43,41 @@ public class UserService {
         return users;
     }
 
-    public UserEntity createUser(UserEntity user) {
-        UserEntity createdUser = new UserEntity(
+    public User createUser(User user) {
+        User createdUser = new User(
             user.getName(),
             user.getEmail(),
             user.getDateOfBirth()
         );
 
         return createdUser;
+    }
+
+    @Transactional
+    public User updateUser(Long userId, User updatedUserData) {
+        User user = new User(
+            1L,
+            "Alex",
+            "a1234s@gmail.com",
+            LocalDate.parse("1988-12-10")
+        );
+
+        System.out.println("New name" + updatedUserData.getName());
+
+        if (user.isValidName(updatedUserData.getName())) {
+            System.out.println("SETTING NEW NAME TO USER");
+            user.setName(updatedUserData.getName());
+        }
+
+        if (user.isValidEmail(updatedUserData.getEmail())) {
+            user.setEmail(updatedUserData.getEmail());
+        }
+
+        if (updatedUserData.getDateOfBirth() != null) {
+            user.setDateOfBirth(updatedUserData.getDateOfBirth());
+        }
+
+        System.out.println(user);
+        return user;
     }
 }
