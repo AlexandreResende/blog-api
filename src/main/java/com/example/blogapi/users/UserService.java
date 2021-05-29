@@ -6,6 +6,8 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -54,30 +56,27 @@ public class UserService {
     }
 
     @Transactional
-    public User updateUser(Long userId, User updatedUserData) {
-        User user = new User(
+    public User updateUser(Long userId, User user) {
+        User user1 = new User(
             1L,
             "Alex",
             "a1234s@gmail.com",
             LocalDate.parse("1988-12-10")
         );
 
-        System.out.println("New name" + updatedUserData.getName());
-
-        if (user.isValidName(updatedUserData.getName())) {
-            System.out.println("SETTING NEW NAME TO USER");
-            user.setName(updatedUserData.getName());
+        if (user.getName() != null && user.getName().length() > 0 && !Objects.equals(user1.getName(), user.getName())) {
+            System.out.println("SETTING NEW USER NAME\n\n");
+            user1.setName(user.getName());
         }
 
-        if (user.isValidEmail(updatedUserData.getEmail())) {
-            user.setEmail(updatedUserData.getEmail());
+        if (user.getEmail() != null && user.getEmail().length() > 0 && !Objects.equals(user1.getEmail(), user.getEmail())) {
+            user1.setEmail(user.getEmail());
         }
 
-        if (updatedUserData.getDateOfBirth() != null) {
-            user.setDateOfBirth(updatedUserData.getDateOfBirth());
+        if (user.getDateOfBirth() != null) {
+            user1.setDateOfBirth(user.getDateOfBirth());
         }
 
-        System.out.println(user);
-        return user;
+        return user1;
     }
 }

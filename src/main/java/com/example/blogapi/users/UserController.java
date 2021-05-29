@@ -1,13 +1,14 @@
 package com.example.blogapi.users;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/v1/users")
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User createdUser = userService.createUser(user);
 
         return ResponseEntity.ok(createdUser);
@@ -55,6 +56,7 @@ public class UserController {
         @PathVariable("userId") Long userId,
         @RequestBody User user
     ) {
+        // criar uma classe de payload para o update user
         User updatedUser = userService.updateUser(userId, user);
 
         return ResponseEntity.ok(updatedUser);

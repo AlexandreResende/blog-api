@@ -1,17 +1,16 @@
 package com.example.blogapi.users;
 
-import com.example.blogapi.users.interfaces.UserEntityInterface;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Objects;
 
 @Table
 @Entity
-public class User implements UserEntityInterface {
+public class User {
     @Id
     @SequenceGenerator(
         name = "user_sequence",
@@ -24,15 +23,13 @@ public class User implements UserEntityInterface {
     )
     private Long id;
 
-    @NotNull
     private String name;
 
-    @NotNull
+    @Email
     private String email;
 
     private boolean isDeleted = false;
 
-    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dateOfBirth;
 
@@ -131,31 +128,5 @@ public class User implements UserEntityInterface {
 
     public void setLastLogin(LocalDate lastLogin) {
         this.lastLogin = lastLogin;
-    }
-
-    @Override
-    public boolean isValidName(String name) {
-        if (
-            this.name.equals(null) ||
-            this.name.length() == 0 ||
-            Objects.equals(this.name, name)
-        ) {
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean isValidEmail(String email) {
-        if (
-            this.email.equals(null) ||
-            this.email.length() == 0 ||
-            Objects.equals(this.email, email)
-        ) {
-            return false;
-        }
-
-        return true;
     }
 }
