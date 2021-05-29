@@ -41,4 +41,14 @@ public class UserService {
 
         return users;
     }
+
+    public UserEntity createUser(UserEntity user) {
+        UserEntity createdUser = new UserEntity(
+            user.getName(),
+            user.getEmail(),
+            user.getDateOfBirth()
+        );
+
+        return createdUser;
+    }
 }

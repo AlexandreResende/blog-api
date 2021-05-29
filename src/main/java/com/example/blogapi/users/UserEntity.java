@@ -1,6 +1,9 @@
 package com.example.blogapi.users;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -18,14 +21,29 @@ public class UserEntity {
         generator = "user_sequence"
     )
     private Long id;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private String email;
+
     private boolean isDeleted = false;
+
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dateOfBirth;
+
     private LocalDate lastLogin;
+
     private LocalDate createdAt = LocalDate.now();
+
     @Transient
     private Integer age;
+
+    public UserEntity () {
+        super();
+    }
 
     public UserEntity(
         String name,
