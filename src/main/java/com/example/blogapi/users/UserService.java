@@ -1,5 +1,6 @@
 package com.example.blogapi.users;
 
+import com.example.blogapi.users.requests.UpdateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,27 +65,30 @@ public class UserService {
     }
 
     @Transactional
-    public User updateUser(Long userId, User user) {
-        User user1 = new User(
-            1L,
-            "Alex",
-            "a1234s@gmail.com",
-            LocalDate.parse("1988-12-10")
-        );
+    public User updateUser(Long userId, UpdateUserRequest updatedUser) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalStateException("Student not found"));
 
-        if (user.getName() != null && user.getName().length() > 0 && !Objects.equals(user1.getName(), user.getName())) {
-            System.out.println("SETTING NEW USER NAME\n\n");
-            user1.setName(user.getName());
+        if (
+            updatedUser.getName() != null &&
+            updatedUser.getName().length() > 0
+            && !Objects.equals(user.getName(), updatedUser.getName())
+        ) {
+            user.setName(updatedUser.getName());
         }
 
-        if (user.getEmail() != null && user.getEmail().length() > 0 && !Objects.equals(user1.getEmail(), user.getEmail())) {
-            user1.setEmail(user.getEmail());
+        if (
+            updatedUser.getEmail() != null &&
+            updatedUser.getEmail().length() > 0 &&
+            !Objects.equals(user.getEmail(), updatedUser.getEmail())
+        ) {
+            user.setEmail(updatedUser.getEmail());
         }
 
-        if (user.getDateOfBirth() != null) {
-            user1.setDateOfBirth(user.getDateOfBirth());
+        if (updatedUser.getDateOfBirth() != null) {
+            user.setDateOfBirth(updatedUser.getDateOfBirth());
         }
 
-        return user1;
+        return user;
     }
 }

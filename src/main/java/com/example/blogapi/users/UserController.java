@@ -1,5 +1,6 @@
 package com.example.blogapi.users;
 
+import com.example.blogapi.users.requests.UpdateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -54,9 +55,8 @@ public class UserController {
     )
     public ResponseEntity<User> updateUser(
         @PathVariable("userId") Long userId,
-        @RequestBody User user
+        @Valid @RequestBody UpdateUserRequest user
     ) {
-        // criar uma classe de payload para o update user
         User updatedUser = userService.updateUser(userId, user);
 
         return ResponseEntity.ok(updatedUser);
