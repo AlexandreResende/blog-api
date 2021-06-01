@@ -14,9 +14,6 @@ public class UpdateUserRequest {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     public String dateOfBirth;
 
-    public UpdateUserRequest() {
-    }
-
     public String getName() {
         return name;
     }
@@ -30,7 +27,7 @@ public class UpdateUserRequest {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+         this.email = email;
     }
 
     public LocalDate getDateOfBirth() {
