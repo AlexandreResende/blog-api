@@ -1,5 +1,6 @@
 package com.example.blogapi.users;
 
+import com.example.blogapi.users.requests.CreateUserRequest;
 import com.example.blogapi.users.requests.UpdateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody CreateUserRequest user) {
         User createdUser = userService.createUser(user);
 
         return ResponseEntity.ok(createdUser);

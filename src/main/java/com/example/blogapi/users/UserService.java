@@ -1,5 +1,6 @@
 package com.example.blogapi.users;
 
+import com.example.blogapi.users.requests.CreateUserRequest;
 import com.example.blogapi.users.requests.UpdateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,14 +55,20 @@ public class UserService {
         return users;
     }
 
-    public User createUser(User user) {
+    public User createUser(CreateUserRequest user) {
         Optional<User> optionalUser = userRepository.findUserByEmail(user.getEmail());
 
         if (optionalUser.isPresent()) {
             throw new IllegalStateException("Email already being used");
         }
 
-        return userRepository.save(user);
+        User usr = new User(
+            user.getName(),
+            user.getEmail(),
+            user.getDateOfBirth()
+        );
+
+        return userRepository.save(usr);
     }
 
     @Transactional
