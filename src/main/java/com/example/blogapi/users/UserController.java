@@ -62,4 +62,20 @@ public class UserController {
 
         return ResponseEntity.ok(updatedUser);
     }
+
+    @DeleteMapping(
+        value = "/{userId}",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<HashMap<String, Boolean>> deleteUser(
+    @PathVariable("userId") Long userId
+    ) {
+        boolean userRemoved = userService.deleteUser(userId);
+
+        HashMap<String, Boolean> response = new HashMap<>();
+        response.put("removed", userRemoved);
+
+        return ResponseEntity.ok(response);
+    }
 }

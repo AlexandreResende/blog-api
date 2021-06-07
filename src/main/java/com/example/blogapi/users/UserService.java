@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -97,5 +96,15 @@ public class UserService {
         }
 
         return user;
+    }
+
+    @Transactional
+    public boolean deleteUser(Long userId) {
+        User user = this.userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalStateException("User does not exist"));
+
+        user.setIsDeleted(true);
+
+        return true;
     }
 }
