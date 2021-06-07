@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 @Entity
 @Table(name = "\"user\"")
@@ -86,11 +87,11 @@ public class User {
         this.email = email;
     }
 
-    public boolean isDeleted() {
+    public boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setIsDeleted(boolean deleted) {
         isDeleted = deleted;
     }
 
@@ -138,5 +139,13 @@ public class User {
         ", createdAt=" + createdAt +
         ", age=" + age +
         '}';
+    }
+
+    public boolean isDifferentName(String newName) {
+        return !Objects.equals(this.name, newName);
+    }
+
+    public boolean isDifferentEmail(String newEmail) {
+        return !Objects.equals(this.email, newEmail);
     }
 }

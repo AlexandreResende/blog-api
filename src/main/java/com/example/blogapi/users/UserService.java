@@ -78,8 +78,8 @@ public class UserService {
 
         if (
             updatedUser.getName() != null &&
-            updatedUser.getName().length() > 0
-            && !Objects.equals(user.getName(), updatedUser.getName())
+            updatedUser.getName().length() > 0 &&
+            user.isDifferentName(updatedUser.getName())
         ) {
             user.setName(updatedUser.getName());
         }
@@ -87,7 +87,7 @@ public class UserService {
         if (
             updatedUser.getEmail() != null &&
             updatedUser.getEmail().length() > 0 &&
-            !Objects.equals(user.getEmail(), updatedUser.getEmail())
+            user.isDifferentEmail(updatedUser.getEmail())
         ) {
             user.setEmail(updatedUser.getEmail());
         }
