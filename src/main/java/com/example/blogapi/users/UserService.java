@@ -29,23 +29,7 @@ public class UserService {
     }
 
     public List<User> getUsers() {
-        List<User> users = new ArrayList<User>();
-
-        User user1 = new User(
-            1L,
-            "Alex",
-            "a1234s@gmail.com",
-            LocalDate.parse("1988-12-10")
-        );
-        User user2 = new User(
-            1L,
-            "Alexandre",
-            "e12345r@gmail.com",
-            LocalDate.parse("1988-12-10")
-        );
-
-        users.add(user1);
-        users.add(user2);
+        List<User> users = this.userRepository.findAll();
 
         return users;
     }

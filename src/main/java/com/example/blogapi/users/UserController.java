@@ -31,7 +31,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, List<User>>> getUsers() {
        List<User> users = userService.getUsers();
        HashMap<String, List<User>> response = new HashMap<>();
