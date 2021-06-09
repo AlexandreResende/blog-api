@@ -22,12 +22,8 @@ public class UserService {
     }
 
     public User getUserById(Long userId) {
-        User user = new User(
-            1L,
-            "Alexandre",
-            "aasdas@gmail.com",
-            LocalDate.parse("1988-12-10")
-        );
+        User user = this.userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalStateException("User not found"));
 
         return user;
     }
