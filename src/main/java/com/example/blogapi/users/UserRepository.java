@@ -13,4 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT u from \"user\" u WHERE u.is_deleted = false", nativeQuery = true)
     List<User> findAllNonDeletedUsers();
+
+    @Query(value = "SELECT * from \"user\" WHERE id = ?1 AND is_deleted = false", nativeQuery = true)
+    Optional<User> findNonDeletedUser(Long id);
 }

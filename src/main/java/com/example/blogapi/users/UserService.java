@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public User getUserById(Long userId) {
-        User user = this.userRepository.findById(userId)
+        User user = this.userRepository.findNonDeletedUser(userId)
             .orElseThrow(() -> new IllegalStateException("User not found"));
 
         return user;
