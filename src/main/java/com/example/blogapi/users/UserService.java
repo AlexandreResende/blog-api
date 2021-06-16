@@ -29,7 +29,7 @@ public class UserService {
     }
 
     public List<User> getUsers() {
-        List<User> users = this.userRepository.findAll();
+        List<User> users = this.userRepository.findAllNonDeletedUsers();
 
         return users;
     }
