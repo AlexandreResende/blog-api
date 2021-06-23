@@ -33,12 +33,22 @@ public class UserController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, List<User>>> getNonDeletedUsers() {
-       List<User> users = userService.getUsers();
+       List<User> users = userService.getNonDeletedUsers();
        HashMap<String, List<User>> response = new HashMap<>();
 
        response.put("users", users);
 
        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, List<User>>> getAllUsers() {
+        List<User> users = userService.getUsers();
+        HashMap<String, List<User>> response = new HashMap<>();
+
+        response.put("users", users);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

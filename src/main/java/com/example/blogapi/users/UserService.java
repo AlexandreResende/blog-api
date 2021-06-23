@@ -28,8 +28,14 @@ public class UserService {
         return user;
     }
 
-    public List<User> getUsers() {
+    public List<User> getNonDeletedUsers() {
         List<User> users = this.userRepository.findAllNonDeletedUsers();
+
+        return users;
+    }
+
+    public List<User> getUsers() {
+        List<User> users = this.userRepository.findAll();
 
         return users;
     }
