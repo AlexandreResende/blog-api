@@ -1,5 +1,6 @@
 package com.example.blogapi.users;
 
+import com.example.blogapi.posts.Post;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,18 +24,28 @@ public class User {
         strategy = GenerationType.SEQUENCE,
         generator = "user_sequence"
     )
-    private Long id;
+    private Long userId;
+
     @NotNull
     private String name;
+
     @NotNull
     @Email
     private String email;
+
     private boolean isDeleted = false;
+
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dateOfBirth;
+
     private LocalDate lastLogin;
+
     private LocalDate createdAt = LocalDate.now();
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
     @Transient
     private Integer age;
 
@@ -57,18 +69,18 @@ public class User {
         String email,
         LocalDate dateOfBirth
     ) {
-        this.id = id;
+        this.userId = id;
         this.name = name;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long id) {
+        this.userId = id;
     }
 
     public String getName() {
@@ -127,10 +139,14 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-        "id=" + id +
+        "id=" + userId +
         ", name='" + name + '\'' +
         ", email='" + email + '\'' +
         ", isDeleted=" + isDeleted +
