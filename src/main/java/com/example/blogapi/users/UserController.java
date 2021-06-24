@@ -31,7 +31,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/non-deleted", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap<String, List<User>>> getNonDeletedUsers() {
        List<User> users = userService.getNonDeletedUsers();
        HashMap<String, List<User>> response = new HashMap<>();
