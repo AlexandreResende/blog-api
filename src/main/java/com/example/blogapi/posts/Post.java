@@ -31,12 +31,21 @@ public class Post {
 
     private LocalDate createdAt = LocalDate.now();
 
-    public Long getId() {
+    private boolean isDeleted = false;
+
+    public Post() { super(); }
+
+    public Post(String post, User user) {
+        this.post = post;
+        this.user = user;
+    }
+
+    public Long getPostId() {
         return postId;
     }
 
-    public void setId(Long id) {
-        this.postId = id;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public String getPost() {
@@ -47,7 +56,27 @@ public class Post {
         this.post = post;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public LocalDate getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
