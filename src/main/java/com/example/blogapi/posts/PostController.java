@@ -41,4 +41,17 @@ public class PostController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping(value = "/{userId}/{postId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Post>> getNonDeletedPostById(
+        @PathVariable("userId") Long userId,
+        @PathVariable("postId") Long postId
+    ) {
+        HashMap<String, Post> response = new HashMap<>();
+        Post post = this.postService.getNonDeletedPost(userId, postId);
+
+        response.put("post", post);
+
+        return ResponseEntity.ok(response);
+    }
 }

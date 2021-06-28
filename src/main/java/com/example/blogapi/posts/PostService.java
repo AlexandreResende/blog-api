@@ -19,4 +19,11 @@ public class PostService {
 
         return nonDeletedPosts;
     }
+
+    Post getNonDeletedPost(Long userId, Long postId) {
+        Post post = this.postRepository.getNonDeletedPostByUserIdAndPostId(userId, postId)
+            .orElseThrow(() -> new IllegalStateException("Post not found"));
+
+        return post;
+    }
 }
