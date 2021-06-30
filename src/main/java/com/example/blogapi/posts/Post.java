@@ -25,6 +25,9 @@ public class Post {
     @Lob
     private String post;
 
+    @NotNull
+    private String title;
+
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
     private User user;
@@ -35,9 +38,15 @@ public class Post {
 
     public Post() { super(); }
 
-    public Post(String post, User user) {
+    public Post(String post, String title, User user) {
         this.post = post;
+        this.title = title;
         this.user = user;
+    }
+
+    public Post(String post, String title) {
+        this.post = post;
+        this.title = title;
     }
 
     public Long getPostId() {
@@ -78,5 +87,13 @@ public class Post {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

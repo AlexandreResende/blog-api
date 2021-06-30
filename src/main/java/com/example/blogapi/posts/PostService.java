@@ -26,4 +26,10 @@ public class PostService {
 
         return post;
     }
+
+    public boolean createPost(Post post) {
+        this.postRepository.save(post);
+
+        return true;
+    }
 }

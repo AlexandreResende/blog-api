@@ -3,10 +3,7 @@ package com.example.blogapi.posts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +48,28 @@ public class PostController {
         Post post = this.postService.getNonDeletedPost(userId, postId);
 
         response.put("post", post);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(
+        value = "/posts",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<HashMap<String, Boolean>> createPost(
+        @RequestBody Post post
+    ) {
+        /*
+        * Getting the use id by the token
+        * verify this id from user in the db
+        * throw error if this does not exist
+        * create post
+        * */
+        HashMap<String, Boolean> response = new HashMap();
+        boolean postCreated = this.postService.createPost(post);
+
+        response.put("created", true);
 
         return ResponseEntity.ok(response);
     }
